@@ -1,57 +1,82 @@
-import("TemBot.Lua.TemBotLua")
+-- Working
+
+-----------------------------------------------
+-- Maevement Luma Hunt v2.6.5 : Wait on luma --
+--- Created by MaeBot for TemBot by NhMarco ---
+-----------------------------------------------
+
+botname = "VM1"
+
+--Importing TemBotLua
+import ('TemBot.Lua.TemBotLua')
 
 --Registering the Temtem Window
 tblua:RegisterTemTemWindow()
+tblua:GetAreaColor()
 
--- define turn
+tblua:Sleep(1000)
+
 t = 1
-
-tblua:Sleep(1500)
-
+encounter = 0
+Zez = 1
 MovementSwitch = 1
 
 if tblua:IsInWorld() == true or tblua:IsInFight() == true then
  while(true)
  do
    if tblua:IsInWorld() == true then
-      local sexy = math.random(50, 250)
+        local sexy = math.random(600)
       tblua:Sleep(sexy)
       tblua:CheckPause()
       tblua:CheckLogout()
     while tblua:IsInWorld() == true do
-       t = 1
-       while MovementSwitch == 1 do
-         if tblua:IsInWorld() == false then
-           break
-         else
+       if Zez == 1 then
+        if MovementSwitch == 1 then
            tblua:CircleArea()
-         end
-       end
-       while MovementSwitch == 2 do
-         if tblua:IsInWorld() == false then
-           break
-         else
+           local xd = math.random(300, 400)
+           tblua:Sleep(xd)
+           local MovementSwitch = math.random(2)
+        elseif MovementSwitch == 2 then
            tblua:RandomArea()
-         end
+           local xdd = math.random(300, 1200)
+           tblua:Sleep(xdd)
+           local MovementSwitch = 1
+        end
+       elseif Zez == 2 then
+           tblua:CircleArea()
        end
     end
    end
 
-            --loop if minimap not detected
-            while tblua:IsInWorld() == false do
-      local sex = math.random(50, 150)
-      tblua:Sleep(sex)
+    --loop if minimap not detected
+    if tblua:IsInWorld() == false then
+      tblua:Sleep(100)
       tblua:StopMovement()
-                --if bot is in fight
-                if tblua:IsInFight() == true then
-                    --Luma check positive (message and notification)
-        local Platypet = math.random(100, 200)
+      --if bot is in fight
+      if tblua:IsInFight() == true then
+        --Luma check positive (message and notification)
+        local Platypet = math.random(50, 150)
         tblua:Sleep(Platypet)
-                    if tblua:CheckLuma() == true then
-                        tblua:SendTelegramMessage("Luma Found! Waiting...")
-                        tblua:TestMessage("Luma Found! Waiting...")
-                        tblua:PressKey(0x71)
-                    else
+        if tblua:CheckLuma() == true then
+          if tblua:GetPixelColor(1045, 100) == "0x1E1E1E" then
+           if tblua:GetPixelColor(777, 65) == "0x1E1E1E" then
+              encounter = encounter + 2
+           else
+              encounter = encounter + 1
+           end
+          end
+          tblua:SendTelegramMessage("Luma Found on " .. tostring(botname) .. " after " .. tostring(encounter) .. " tems encountered !\nCongratulations ! :D")
+          tblua:TestMessage("Luma Found after " .. tostring(encounter) .. " Tems encountered ! Congratulations! :D")
+          tblua:PressKey(0x71)
+        else
+          --Else no Luma, so run away
+          if tblua:GetPixelColor(1045, 100) == "0x1E1E1E" then
+           if tblua:GetPixelColor(777, 65) == "0x1E1E1E" then
+              encounter = encounter + 2
+           else
+              encounter = encounter + 1
+           end
+          end
                     local RandomSleepy = tblua:GetSleepTime()
                     local cr = tblua:GetSleepTime()
                     -- exhausted
