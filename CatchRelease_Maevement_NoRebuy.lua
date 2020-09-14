@@ -69,6 +69,8 @@ if tblua:IsInWorld() == true or tblua:IsInFight() == true then
           tblua:TestMessage("Luma Found after " .. tostring(encounter) .. " Tems encountered ! Congratulations! :D")
           tblua:PressKey(0x71)
         else
+          local MS = math.random(2)
+          Zez = MS
           --Else no Luma, so run away
           if tblua:GetPixelColor(1045, 100) == "0x1E1E1E" then
            if tblua:GetPixelColor(777, 65) == "0x1E1E1E" then
